@@ -98,7 +98,7 @@
       "query": "经典"
     },
     {
-      "name": "豆瓣TOP250",
+      "name": "豆瓣高分",
       "type": "movie",
       "query": "豆瓣高分"
     },
