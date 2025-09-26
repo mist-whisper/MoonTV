@@ -28,12 +28,17 @@ const storageType = process.env.NEXT_PUBLIC_STORAGE_TYPE || 'localstorage';
   }
 
   // localstorage模式：在middleware中完成验证
-  if (storageType === 'localstorage') {
+/*  if (storageType === 'localstorage') {
     if (!authInfo.password || authInfo.password !== process.env.PASSWORD) {
       return handleAuthFailure(request, pathname);
     }
     return NextResponse.next();
   }
+*/
+  if (storageType === 'localstorage') {
+  // 永远允许
+  return NextResponse.next();
+}
 
   // 其他模式：只验证签名
   // 检查是否有用户名（非localStorage模式下密码不存储在cookie中）
