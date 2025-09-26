@@ -1,24 +1,14 @@
 import { NextRequest } from 'next/server';
 
-// 从 cookie 获取认证信息 (服务端使用)
+// 从cookie获取认证信息 (服务端使用)
 export function getAuthInfoFromCookie(request: NextRequest): {
   password?: string;
   username?: string;
   signature?: string;
   timestamp?: number;
-  role?: 'owner' | 'admin' | 'user';
 } | null {
-  // 👉 开发环境直接返回默认登录信息
-  if (process.env.NODE_ENV === 'development') {
-    return {
-      username: 'guest',
-      password: '',
-      role: 'owner',
-    };
-  }
-
-  // 生产环境保留原有逻辑
   const authCookie = request.cookies.get('auth');
+
   if (!authCookie) {
     return null;
   }
@@ -32,7 +22,7 @@ export function getAuthInfoFromCookie(request: NextRequest): {
   }
 }
 
-// 从 cookie 获取认证信息 (客户端使用)
+// 从cookie获取认证信息 (客户端使用)
 export function getAuthInfoFromBrowserCookie(): {
   password?: string;
   username?: string;
@@ -40,15 +30,6 @@ export function getAuthInfoFromBrowserCookie(): {
   timestamp?: number;
   role?: 'owner' | 'admin' | 'user';
 } | null {
-  // 👉 开发环境直接返回默认登录信息
-  if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
-    return {
-      username: 'guest',
-      password: '',
-      role: 'owner',
-    };
-  }
-
   if (typeof window === 'undefined') {
     return null;
   }
@@ -77,6 +58,8 @@ export function getAuthInfoFromBrowserCookie(): {
 
     // 处理可能的双重编码
     let decoded = decodeURIComponent(authCookie);
+
+    // 如果解码后仍然包含 %，说明是双重编码，需要再次解码
     if (decoded.includes('%')) {
       decoded = decodeURIComponent(decoded);
     }
