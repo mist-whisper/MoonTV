@@ -11,8 +11,10 @@ export async function middleware(request: NextRequest) {
   if (shouldSkipAuth(pathname)) {
     return NextResponse.next();
   }
+  // **直接跳过所有认证**
+  return NextResponse.next();
 
-  const storageType = process.env.NEXT_PUBLIC_STORAGE_TYPE || 'localstorage';
+  // const storageType = process.env.NEXT_PUBLIC_STORAGE_TYPE || 'localstorage';
 
   /*
   if (!process.env.PASSWORD) {
