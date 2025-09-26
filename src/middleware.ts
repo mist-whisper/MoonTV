@@ -24,6 +24,7 @@ export async function middleware(request: NextRequest) {
 
   // **直接跳过所有认证**
   return NextResponse.next();
+}
 /*  if (!process.env.PASSWORD) {
     // 如果没有设置密码，重定向到警告页面
     const warningUrl = new URL('/warning', request.url);
